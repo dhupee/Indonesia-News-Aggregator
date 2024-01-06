@@ -1,14 +1,25 @@
 package main
 
 import (
-	// "fmt"
+	"fmt"
+	"os"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/joho/godotenv"
 )
 
 func main() {
+	// load .env
+	err := godotenv.Load()
+	if err != nil {
+		fmt.Println("Failed to load .env")
+	}
+
 	// create new fiber instance
 	app := fiber.New()
+
+	// env variables
+	PORT := os.Getenv("PORT")
 
 	// home route
 	app.Get("/", func(c *fiber.Ctx) error {
@@ -16,5 +27,5 @@ func main() {
 	})
 
 	// start server
-	app.Listen(":3000")
+	app.Listen(":" + PORT)
 }
