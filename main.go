@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"os"
 
 	"github.com/gofiber/fiber/v2"
@@ -9,23 +9,33 @@ import (
 )
 
 func main() {
-	// load .env
+	// Load the .env file
 	err := godotenv.Load()
 	if err != nil {
-		fmt.Println("Failed to load .env")
+		log.Fatal("Failed to load .env")
 	}
 
-	// create new fiber instance
+	// Create a new Fiber app
 	app := fiber.New()
 
-	// env variables
-	PORT := os.Getenv("PORT")
+	// Get the port from the environment variables
+	port := os.Getenv("PORT")
 
-	// home route
+	// Define the route handler for the root path
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("Hello, World!")
 	})
 
-	// start server
-	app.Listen(":" + PORT)
+	// search news on Kompas
+	app.Get("/kompas/search/:keyword?", func(c *fiber.Ctx) error {
+		return c.SendString("You search for " + c.Params("keyword"))
+	})
+
+	app.Get("/kompas/categories/:category?", func(c *fiber.Ctx) error {
+		return c.SendString("You search for " + c.Params("category") + " category")
+	})
+
+
+	// Start the app on the specified port
+	app.Listen(":" + port)
 }
