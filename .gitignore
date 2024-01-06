@@ -1,2 +1,5 @@
 # binary files of main.go
 main
+
+# sensitive files
+.env
