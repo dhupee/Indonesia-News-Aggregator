@@ -4,6 +4,8 @@ import (
 	"log"
 	"os"
 
+	kompas "github.com/dhupee/Indonesia-News-Aggregator/kompas"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
 )
@@ -28,7 +30,12 @@ func main() {
 
 	// search news on Kompas
 	app.Get("/kompas/search/:keyword?", func(c *fiber.Ctx) error {
-		return c.SendString("You search for " + c.Params("keyword"))
+		if(c.Params("keyword") == "") {
+			return c.SendString("Please specify keyword")
+		}
+
+		result := kompas.Search(c.Params("keyword"))
+		return c.SendString("You search for " + result)
 	})
 
 	app.Get("/kompas/categories/:category?", func(c *fiber.Ctx) error {
