@@ -3,3 +3,6 @@ main
 
 # sensitive files
 .env
+
+# temporary folders
+placeholder
