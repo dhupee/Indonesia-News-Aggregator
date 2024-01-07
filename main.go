@@ -30,7 +30,7 @@ func main() {
 
 	// search news on Kompas
 	app.Get("/kompas/search/:keyword?", func(c *fiber.Ctx) error {
-		if(c.Params("keyword") == "") {
+		if c.Params("keyword") == "" {
 			return c.SendString("Please specify keyword")
 		}
 
@@ -41,7 +41,6 @@ func main() {
 	app.Get("/kompas/categories/:category?", func(c *fiber.Ctx) error {
 		return c.SendString("You search for " + c.Params("category") + " category")
 	})
-
 
 	// Start the app on the specified port
 	app.Listen(":" + port)
