@@ -24,40 +24,49 @@ func main() {
 	port := os.Getenv("PORT")
 
 	// Define the route handler for the root path
-	app.Get("/", func(c *fiber.Ctx) error {
-		// return welcome.txt
+	app.Get("/", rootHandler)
 
-		return c.SendFile("./assets/welcome.txt")
-	})
-
-	// search news on Kompas
-	app.Get("/kompas/search/:keyword?", func(c *fiber.Ctx) error {
-		if c.Params("keyword") == "" {
-			return c.SendString("Please specify keyword")
-		}
-
-		result := kompas.Search(c.Params("keyword"))
-		return c.SendString("You search for " + result)
-	})
-
-	app.Get("/kompas/categories/:category?/:subcategories?", func(c *fiber.Ctx) error {
-		if subcategories == "" {
-			return c.SendString("You search for " + c.Params("category"))
-		}
-
-		return c.SendString("You search for " + c.Params("subcategories") + " in category " + c.Params("category"))
-	})
-
-	app.Get("/kompas/news/:url?", func(c *fiber.Ctx) error {
-		if c.Params("url") == "" {
-			errorText := "Please specify url\n\nExample: /kompas/news/https://otomotif.kompas.com/read/2024/01/06/180829115/pindad-bikin-prototipe-motor-listrik-ev-scooter-daya-jelajah-100-km"
-
-
-			return c.SendString(errorText)
-		}
-		return c.SendString("You search for " + c.Params("url"))
-	})
+	// Define the route handlers for Kompas endpoints
+	app.Get("/kompas/search/:keyword?", kompasSearchHandler)
+	app.Get("/kompas/categories/:category?/:subcategories?", kompasCategoriesHandler)
+	app.Get("/kompas/news/:url?", kompasNewsHandler)
 
 	// Start the app on the specified port
 	app.Listen(":" + port)
+}
+
+func rootHandler(c *fiber.Ctx) error {
+	return c.SendFile("./assets/welcome.txt")
+}
+
+func kompasSearchHandler(c *fiber.Ctx) error {
+	keyword := c.Params("keyword")
+	if keyword == "" {
+		return c.SendString("Please specify keyword")
+	}
+
+	result := kompas.Search(keyword)
+	return c.SendString("You search for " + result)
+}
+
+func kompasCategoriesHandler(c *fiber.Ctx) error {
+	category := c.Params("category")
+	subcategories := c.Params("subcategories")
+
+	if subcategories == "" {
+		return c.SendString("You search for " + category)
+	}
+
+	return c.SendString("You search for " + subcategories + " in category " + category)
+}
+
+func kompasNewsHandler(c *fiber.Ctx) error {
+	url := c.Params("url")
+
+	if url == "" {
+		errorText := "Please specify url\n\nExample: /kompas/news/https://otomotif.kompas.com/read/2024/01/06/180829115/pindad-bikin-prototipe-motor-listrik-ev-scooter-daya-jelajah-100-km"
+		return c.SendString(errorText)
+	}
+
+	return c.SendString("You search for " + url)
 }

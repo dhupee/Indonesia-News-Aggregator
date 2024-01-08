@@ -2,6 +2,8 @@ package kompas
 
 import (
 	"fmt"
+	"log"
+	"regexp"
 	"strings"
 
 	"github.com/dhupee/Indonesia-News-Aggregator/utils"
@@ -9,7 +11,18 @@ import (
 	"golang.org/x/net/html"
 )
 
-KompasNews := utils.KompasNews{}
+// declare the struct
+type kompasNewsStruct struct {
+	Url     string
+	Title   string
+	Author  string
+	Editor  string
+	Date    string
+	Image   string
+
+	Tags    []string
+	Content []string
+}
 
 // * This functions isnt used yet
 func newsContentCleanUp(rawNewsContent string) string {
@@ -87,12 +100,19 @@ func kompasExtractContentFromScriptTag(codeBlock string, pattern string) (string
 	return "", fmt.Errorf("no match found")
 }
 
-func KompasGetContent(url string) KompasNews {
-	rawHTML := GetHTML(url)
+func KompasGetContent(url string, kompasNews *kompasNewsStruct) *kompasNewsStruct {
+	rawHTML := utils.GetHtml(url)
 
-	KompasNews.Title := kompasExtractContentFromScriptTag(rawHTML, `content_title":\s*"([^"]+)"`)
-	KompasNews.Content := KompasExtractContentFromDiv(rawHTML, "read__content")
+	title, err := kompasExtractContentFromScriptTag(rawHTML, `content_title":\s*"([^"]+)"`)
+	if err != nil {
+		log.Fatal(err)
+	}
+	newsContent := KompasExtractContentFromDiv(rawHTML, "read__content")
 
+	// assign values to the struct fields
+	kompasNews.Url = url
+	kompasNews.Title = title
+	kompasNews.Content = newsContent
 
-	return KompasNews
+	return kompasNews
 }
