@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func GetHTML(url string) string {
+func GetHtml(url string) string {
 	client := &http.Client{}
 
 	req, err := http.NewRequest("GET", url, nil)

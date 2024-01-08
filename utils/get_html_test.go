@@ -4,9 +4,9 @@ import (
 	"testing"
 )
 
-func TestGetHTML(t *testing.T) {
+func TestGetHtml(t *testing.T) {
 	url := "https://www.example.com"
-	rawHTML := GetHTML(url)
+	rawHTML := GetHtml(url)
 	if rawHTML == "" {
 		t.Error("Error")
 	}
