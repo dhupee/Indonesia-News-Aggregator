@@ -25,7 +25,9 @@ func main() {
 
 	// Define the route handler for the root path
 	app.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("Hello, World!")
+		// return welcome.txt
+
+		return c.SendFile("./assets/welcome.txt")
 	})
 
 	// search news on Kompas
