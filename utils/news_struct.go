@@ -5,5 +5,6 @@ type News struct {
 	Author  string
 	Date    string
 	Source  string
+	Image   string // image url
 	Content string
 }
