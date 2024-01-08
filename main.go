@@ -40,8 +40,22 @@ func main() {
 		return c.SendString("You search for " + result)
 	})
 
-	app.Get("/kompas/categories/:category?", func(c *fiber.Ctx) error {
-		return c.SendString("You search for " + c.Params("category") + " category")
+	app.Get("/kompas/categories/:category?/:subcategories?", func(c *fiber.Ctx) error {
+		if subcategories == "" {
+			return c.SendString("You search for " + c.Params("category"))
+		}
+
+		return c.SendString("You search for " + c.Params("subcategories") + " in category " + c.Params("category"))
+	})
+
+	app.Get("/kompas/news/:url?", func(c *fiber.Ctx) error {
+		if c.Params("url") == "" {
+			errorText := "Please specify url\n\nExample: /kompas/news/https://otomotif.kompas.com/read/2024/01/06/180829115/pindad-bikin-prototipe-motor-listrik-ev-scooter-daya-jelajah-100-km"
+
+
+			return c.SendString(errorText)
+		}
+		return c.SendString("You search for " + c.Params("url"))
 	})
 
 	// Start the app on the specified port
