@@ -2,9 +2,6 @@ package kompas
 
 import (
 	"fmt"
-	"io"
-	"log"
-	"net/http"
 	"strings"
 
 	"golang.org/x/net/html"

@@ -6,6 +6,7 @@ import (
 	"net/http"
 )
 
+// !! MIGHT CHANGE IT TO UNIVERSAL METHOD WITH GOOGLE OR SOMETHING
 func Search(keyword string) string {
 	client := &http.Client{}
 
@@ -24,7 +25,7 @@ func Search(keyword string) string {
 	if err != nil {
 		log.Fatal(err)
 	}
-	
+
 	result := string(bodyText)
 	return result
 }
