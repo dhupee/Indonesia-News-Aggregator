@@ -10,6 +10,7 @@
 
 ## Todo list
 
+- [ ] Search feature with google
 - [ ] Get news from Vivanews
 - [ ] Get news from Detik
 - [ ] Get news from Tirto
