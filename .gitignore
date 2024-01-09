@@ -4,7 +4,7 @@ main
 # sensitive files
 .env
 
-# temporary folders
+# temporary folders & iles
 placeholder/
 /*.html
 /*.txt
