@@ -21,7 +21,7 @@ type KompasNewsStruct struct {
 	Image   string
 
 	Tags    []string
-	Content []string
+	Content string
 }
 
 // * This functions isnt used yet
@@ -48,7 +48,7 @@ func newsContentCleanUp(rawNewsContent string) string {
 //
 // Return type:
 // - []string: an array of extracted content strings.
-func KompasGetNewsContent(rawHTML string, div string) []string {
+func KompasGetNewsContent(rawHTML string, div string) string {
 	tokenizer := html.NewTokenizer(strings.NewReader(rawHTML))
 
 	newsContent := []string{}
@@ -61,7 +61,7 @@ func KompasGetNewsContent(rawHTML string, div string) []string {
 		switch tokenType {
 		case html.ErrorToken:
 			// Reached the end of the document, return the extracted content
-			return newsContent
+			return strings.Join(newsContent, "\n")
 
 		case html.StartTagToken:
 			token := tokenizer.Token()
@@ -82,6 +82,8 @@ func KompasGetNewsContent(rawHTML string, div string) []string {
 				text := strings.TrimSpace(tokenizer.Token().Data)
 				if text != "" {
 					log.Println("Extracting text:", text)
+
+					// join the text
 					newsContent = append(newsContent, text)
 				}
 			}
