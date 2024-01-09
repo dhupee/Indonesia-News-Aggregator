@@ -8,6 +8,11 @@ package kompas
 // 	"github.com/dhupee/Indonesia-News-Aggregator/utils"
 // )
 
-// func KompasCategoriesListing(c *fiber.Ctx) error {
+// TODO: implement this
+func KompasCategoriesListing(category string, subcategory string) []string{
+	rawHTML := utils.GetHtml(url)
 
-// }
+	newsListing := []string{}
+
+	return newsListing
+}
