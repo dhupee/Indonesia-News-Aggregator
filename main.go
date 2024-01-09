@@ -62,8 +62,7 @@ func kompasNewsHandler(c *fiber.Ctx) error {
 	url := c.Get("Source")
 
 	if url == "" {
-		errorText := "Please specify url\n\nExample: /kompas/news/https://otomotif.kompas.com/read/2024/01/06/180829115/pindad-bikin-prototipe-motor-listrik-ev-scooter-daya-jelajah-100-km"
-		return c.SendString(errorText)
+		return c.SendFile("./kompas/error_text/kompas_news_handler.txt")
 	}
 
 	kompasNews := kompas.KompasGetContent(url, &kompas.KompasNewsStruct{})
