@@ -50,6 +50,7 @@ func KompasSearchHandler(c *fiber.Ctx) error {
 	return c.SendString("You search for " + result)
 }
 
+// ! FOCUS ON THE MAIN CATEGORY INSTEAD
 func KompasCategoriesHandler(c *fiber.Ctx) error {
 	category := c.Get("category")
 	subcategories := c.Get("subcategories")
