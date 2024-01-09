@@ -40,7 +40,15 @@ func newsContentCleanUp(rawNewsContent string) string {
 	return strings.Join(cleanedNewsContent, "\n")
 }
 
-func KompasExtractContentFromDiv(rawHTML string, div string) []string {
+// KompasGetNewsContent extracts the content from rawHTML based on the specified div tag.
+//
+// Parameters:
+// - rawHTML: the raw HTML string to extract content from.
+// - div: the div tag to search for content within.
+//
+// Return type:
+// - []string: an array of extracted content strings.
+func KompasGetNewsContent(rawHTML string, div string) []string {
 	tokenizer := html.NewTokenizer(strings.NewReader(rawHTML))
 
 	newsContent := []string{}
@@ -81,6 +89,13 @@ func KompasExtractContentFromDiv(rawHTML string, div string) []string {
 	}
 }
 
+// KompasGetTitle captures the string inside the <title> tag in the given raw HTML.
+//
+// Parameters:
+// - rawHTML: The raw HTML string.
+//
+// Returns:
+// - string: The captured string inside the <title> tag, or an empty string if there is no match.
 func KompasGetTitle(rawHTML string) string {
 	// capture string inside <title>
 	pattern := `<title>(.*?)</title>`
@@ -100,14 +115,17 @@ func KompasGetTitle(rawHTML string) string {
 	return ""
 }
 
-// kompasExtractContentFromScriptTag extracts the content from a script tag in a code block using a regular expression pattern.
+
+// kompasGetMetadata retrieves the specified metadata from a given code block using a regular expression pattern.
 //
-// It takes two parameters:
-// - codeBlock: a string representing the code block containing the script tag.
-// - pattern: a string representing the regular expression pattern to match the script tag content.
+// Parameters:
+// - codeBlock: The code block to search for metadata.
+// - pattern: The regular expression pattern to match the metadata.
 //
-// It returns a string representing the content of the script tag if a match is found, and an error otherwise.
-func kompasExtractContentFromScriptTag(codeBlock string, pattern string) (string, error) {
+// Returns:
+// - string: The value of the matched metadata.
+// - error: An error if no match was found.
+func kompasGetMetadata(codeBlock string, pattern string) (string, error) {
 	// Compile the regular expression
 	re := regexp.MustCompile(pattern)
 
@@ -123,16 +141,17 @@ func kompasExtractContentFromScriptTag(codeBlock string, pattern string) (string
 	return "", fmt.Errorf("no match found")
 }
 
-// kompasExtractContentTags extracts content tags from a given code block using a regular expression pattern.
+
+// kompasGetNewsTags returns the tags extracted from a given code block using a regular expression pattern.
 //
 // Parameters:
-//   - codeBlock: The code block from which to extract the tags.
-//   - pattern: The regular expression pattern used to match the tags.
+// - codeBlock: the code block to search for matches.
+// - pattern: the regular expression pattern to match against the code block.
 //
 // Returns:
-//   - []string: A slice of strings containing the extracted tags.
-//   - error: An error if any occurred during the extraction process.
-func kompasExtractContentTags(codeBlock string, pattern string) ([]string, error) {
+// - tags: a slice of strings representing the matched tags.
+// - error: an error if any occurred during the matching process.
+func kompasGetNewsTags(codeBlock string, pattern string) ([]string, error) {
 	// Compile the regular expression
 	re := regexp.MustCompile(pattern)
 
@@ -150,11 +169,12 @@ func kompasExtractContentTags(codeBlock string, pattern string) ([]string, error
 	return tags, nil
 }
 
-// kompasExtractImageUrl extracts the URL of an image from raw HTML.
+
+// kompasGetImageUrl extracts the URL of an image from the given raw HTML using a regular expression pattern.
 //
-// rawHtml: the raw HTML string to search for the image URL.
-// returns: the URL of the image, or an empty string if no URL is found.
-func kompasExtractImageUrl(rawHtml string) string {
+// rawHtml: The raw HTML string from which to extract the image URL.
+// Returns the extracted image URL as a string.
+func kompasGetImageUrl(rawHtml string) string {
 	// Define the regular expression pattern
 	pattern := `<link rel="preload" as="image" href="([^"]+)"`
 
@@ -173,39 +193,40 @@ func kompasExtractImageUrl(rawHtml string) string {
 }
 
 
-// KompasGetContent retrieves content from a given URL and populates a KompasNewsStruct.
+
+// KompasGetData retrieves data from the given URL and populates the KompasNewsStruct with the extracted information.
 //
 // Parameters:
-// - url: a string representing the URL to fetch the content from.
-// - kompasNews: a pointer to a KompasNewsStruct object that will be populated with the retrieved content.
+// - url: a string representing the URL to retrieve the data from.
+// - kompasNews: a pointer to a KompasNewsStruct where the extracted information will be stored.
 //
-// Returns:
-// - KompasNewsStruct: the populated KompasNewsStruct object.
-func KompasGetContent(url string, kompasNews *KompasNewsStruct) KompasNewsStruct {
+// Return:
+// - KompasNewsStruct: the populated KompasNewsStruct containing the extracted data.
+func KompasGetData(url string, kompasNews *KompasNewsStruct) KompasNewsStruct {
 	// get the raw HTML
 	rawHTML := utils.GetHtml(url)
 
 	title := KompasGetTitle(rawHTML)
 
-	author, err := kompasExtractContentFromScriptTag(rawHTML, `"content_author":\s+"([^"]+)`)
+	author, err := kompasGetMetadata(rawHTML, `"content_author":\s+"([^"]+)`)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	editor, err := kompasExtractContentFromScriptTag(rawHTML, `"content_editor":\s+"([^"]+)`)
+	editor, err := kompasGetMetadata(rawHTML, `"content_editor":\s+"([^"]+)`)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	date, err := kompasExtractContentFromScriptTag(rawHTML, `"content_PublishedDate":\s+"([^"]+)`)
+	date, err := kompasGetMetadata(rawHTML, `"content_PublishedDate":\s+"([^"]+)`)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	image := kompasExtractImageUrl(rawHTML)
+	image := kompasGetImageUrl(rawHTML)
 
-	newsContent := KompasExtractContentFromDiv(rawHTML, "read__content")
-	newsTags, err := kompasExtractContentTags(rawHTML, `"content_tags":\s+"([^"]+)`)
+	newsContent := KompasGetNewsContent(rawHTML, `read__content`)
+	newsTags, err := kompasGetNewsTags(rawHTML, `"content_tags":\s+"([^"]+)`)
 	if err != nil {
 		log.Fatal(err)
 	}

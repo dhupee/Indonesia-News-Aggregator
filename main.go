@@ -65,7 +65,7 @@ func kompasNewsHandler(c *fiber.Ctx) error {
 		return c.SendFile("./kompas/error_text/kompas_news_handler.txt")
 	}
 
-	kompasNews := kompas.KompasGetContent(url, &kompas.KompasNewsStruct{})
+	kompasNews := kompas.KompasGetData(url, &kompas.KompasNewsStruct{})
 
 	return c.JSON(kompasNews)
 }
