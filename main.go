@@ -29,15 +29,15 @@ func main() {
 	app.Get("/", handlers.RootHandler)
 
 	// Define the route handlers for Kompas endpoints
-	app.Get("/kompas/search/:keyword?", kompasSearchHandler)
-	app.Get("/kompas/categories/:category?/:subcategories?", kompasCategoriesHandler)
-	app.Get("/kompas/news/", kompasNewsHandler)
+	app.Get("/kompas/search/:keyword?", KompasSearchHandler)
+	app.Get("/kompas/categories/:category?/:subcategories?", KompasCategoriesHandler)
+	app.Get("/kompas/news/", KompasNewsHandler)
 
 	// Start the app on the specified port
 	app.Listen(":" + port)
 }
 
-func kompasSearchHandler(c *fiber.Ctx) error {
+func KompasSearchHandler(c *fiber.Ctx) error {
 	keyword := c.Params("keyword")
 	if keyword == "" {
 		return c.SendString("Please specify keyword")
@@ -47,7 +47,7 @@ func kompasSearchHandler(c *fiber.Ctx) error {
 	return c.SendString("You search for " + result)
 }
 
-func kompasCategoriesHandler(c *fiber.Ctx) error {
+func KompasCategoriesHandler(c *fiber.Ctx) error {
 	category := c.Params("category")
 	subcategories := c.Params("subcategories")
 
@@ -58,7 +58,7 @@ func kompasCategoriesHandler(c *fiber.Ctx) error {
 	return c.SendString("You search for " + subcategories + " in category " + category)
 }
 
-func kompasNewsHandler(c *fiber.Ctx) error {
+func KompasNewsHandler(c *fiber.Ctx) error {
 	url := c.Get("Source")
 
 	if url == "" {
