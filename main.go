@@ -5,7 +5,6 @@ import (
 	"os"
 	"regexp"
 
-	handlers "github.com/dhupee/Indonesia-News-Aggregator/handlers"
 	kompas "github.com/dhupee/Indonesia-News-Aggregator/kompas"
 
 	"github.com/gofiber/fiber/v2"
@@ -26,7 +25,7 @@ func main() {
 	port := os.Getenv("PORT")
 
 	// Define the route handler for the root path and non-source-specific routes
-	app.Get("/", handlers.RootHandler)
+	app.Get("/", RootHandler)
 
 	// Define the route handlers for Kompas endpoints
 	app.Get("/kompas/search/", KompasSearchHandler)
@@ -35,6 +34,10 @@ func main() {
 
 	// Start the app on the specified port
 	app.Listen(":" + port)
+}
+
+func RootHandler(c *fiber.Ctx) error {
+	return c.SendFile("./assets/welcome.txt")
 }
 
 func KompasSearchHandler(c *fiber.Ctx) error {
