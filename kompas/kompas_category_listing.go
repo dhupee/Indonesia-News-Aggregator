@@ -1,18 +1,20 @@
 package kompas
 
 // import (
-// 	"fmt"
-// 	"log"
-// 	"net/http"
+// 	// "fmt"
+// 	// "log"
+// 	// "net/http"
 
 // 	"github.com/dhupee/Indonesia-News-Aggregator/utils"
 // )
 
-// TODO: implement this
-func KompasCategoriesListing(category string, subcategory string) []string{
-	rawHTML := utils.GetHtml(url)
+// // TODO: implement this
+// func KompasCategoriesListing(category string, subcategory string) []string{
+// 	url := "http://" + category+ ".kompas.com/" + subcategory+ "/"
 
-	newsListing := []string{}
+// 	rawHTML := utils.GetHtml(url)
 
-	return newsListing
-}
+// 	newsListing := []string{}
+
+// 	return newsListing
+// }
