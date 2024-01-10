@@ -6,14 +6,34 @@ import (
 	"github.com/dhupee/Indonesia-News-Aggregator/utils"
 )
 
-var bola = []string{
-	"liga-italia",
-	"liga-inggris",
-}
 
-var categories = []string{
+var kompasCategoryList = []string{
+	"all",
+	"nasional",
+	"regional",
+	"megapolitan",
+	"global",
+	"tren",
+	"health",
+	"food",
+	"edukasi",
+	"money",
+	"properti",
 	"bola",
+	"travel",
 	"otomotif",
+	"sains",
+	"hype",
+	"jeo",
+	"skola",
+	"stori",
+	"konsultasihukum",
+	"wiken",
+	"headline",
+	"terpopuler",
+	"sorotan",
+	"topik",
+	"advertorial",
 }
 
 func KompasGetNewsList(rawHtml string) []string{
