@@ -3,14 +3,17 @@ module github.com/dhupee/Indonesia-News-Aggregator
 go 1.21.5
 
 require (
+	github.com/gofiber/contrib/swagger v1.1.1
 	github.com/gofiber/fiber/v2 v2.52.0 // direct
 	github.com/joho/godotenv v1.5.1 // direct
-	golang.org/x/net v0.19.0 // direct
-	github.com/gofiber/contrib/swagger v1.1.1
+	golang.org/x/net v0.20.0 // direct
+	github.com/PuerkitoBio/goquery v1.8.1 // direct
 )
 
 require (
+	
 	github.com/andybalholm/brotli v1.0.5 // indirect
+	github.com/andybalholm/cascadia v1.3.2 // indirect
 	github.com/asaskevich/govalidator v0.0.0-20230301143203-a9d515a09cc2 // indirect
 	github.com/go-openapi/analysis v0.21.4 // indirect
 	github.com/go-openapi/errors v0.20.3 // indirect
@@ -36,7 +39,7 @@ require (
 	github.com/valyala/fasthttp v1.51.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
 	go.mongodb.org/mongo-driver v1.11.3 // indirect
-	golang.org/x/sys v0.15.0 // indirect
+	golang.org/x/sys v0.16.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
