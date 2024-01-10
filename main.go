@@ -29,7 +29,7 @@ func main() {
 
 	// Define the route handlers for Kompas endpoints
 	app.Get("/kompas/search/", KompasSearchHandler)
-	app.Get("/kompas/categories/", KompasCategoriesHandler)
+	app.Get("/kompas/index/", KompasIndexHandler)
 	app.Get("/kompas/news/", KompasNewsHandler)
 
 	// Start the app on the specified port
@@ -51,17 +51,44 @@ func KompasSearchHandler(c *fiber.Ctx) error {
 }
 
 // ! FOCUS ON THE MAIN CATEGORY INSTEAD
-func KompasCategoriesHandler(c *fiber.Ctx) error {
+func KompasIndexHandler(c *fiber.Ctx) error {
 	category := c.Get("category")
-	subcategories := c.Get("subcategories")
+	page := c.Get("page")
+	date := c.Get("date")
 
-	if subcategories == "" {
-		return c.SendString("You search for " + category)
-	} else {
-		return c.SendString("You search for " + subcategories + " in category " + category)
+	var url string
+
+	categoryValid := kompas.KompasCategoryCheck(category, kompas.KompasCategoryList)
+	if !categoryValid {
+		return c.SendString("Invalid category")
 	}
 
-	return c.SendString("You search for " + subcategories + " in category " + category)
+	// // wait 3 seconds
+	// time.Sleep(3 * time.Second)
+
+	switch {
+	case category != "":
+		url = "https://indeks.kompas.com/?site=" + category
+	case page != "":
+		url = "https://indeks.kompas.com/?page=" + page
+	case date != "":
+		url = "https://indeks.kompas.com/?date=" + date
+	case category != "" && page != "":
+		url = "https://indeks.kompas.com/?site=" + category + "&page=" + page
+	case category != "" && date != "":
+		url = "https://indeks.kompas.com/?site=" + category + "&date=" + date
+	case page != "" && date != "":
+		url = "https://indeks.kompas.com/?page=" + page + "&date=" + date
+	case category != "" && page != "" && date != "":
+		url = "https://indeks.kompas.com/?site=" + category + "&page=" + page + "&date=" + date
+	default:
+		url = "https://indeks.kompas.com/?site=tekno"
+	}
+
+	// get news index
+	newsIndex := kompas.KompasGetNewsIndex(url)
+
+	return c.JSON(newsIndex)
 }
 
 func KompasNewsHandler(c *fiber.Ctx) error {

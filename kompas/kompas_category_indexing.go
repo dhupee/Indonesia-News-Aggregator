@@ -1,42 +1,88 @@
 package kompas
 
-// import (
-// 	// "fmt"
-// 	// "log"
-// 	// "net/http"
+import (
+	// "fmt"
+	// "time"
+	"log"
+	"strings"
 
-// 	"github.com/dhupee/Indonesia-News-Aggregator/utils"
-// )
+	"github.com/dhupee/Indonesia-News-Aggregator/utils"
 
-// var bola = []string{
-// 	"liga-italia",
-// 	"liga-inggris",
-// }
+	"github.com/PuerkitoBio/goquery"
+)
 
-// func KompasGetNewsList(rawHtml string) []string{
-// 	newsList := []string{}
+// declare the struct
+type Article struct{
+	Title string
+	Url string
+	Date string
+	Image string
+}
 
-// 	return newsList
-// }
+var KompasCategoryList = []string{
+	"all",
+	"nasional",
+	"regional",
+	"megapolitan",
+	"global",
+	"tren",
+	"health",
+	"food",
+	"edukasi",
+	"money",
+	"properti",
+	"bola",
+	"travel",
+	"otomotif",
+	"sains",
+	"hype",
+	"jeo",
+	"skola",
+	"stori",
+	"konsultasihukum",
+	"wiken",
+	"headline",
+	"terpopuler",
+	"sorotan",
+	"topik",
+	"advertorial",
+}
 
-// func KompasCategoryCheck(category string, subcategory string) bool {
-// 	var results bool
+func KompasGetNewsIndex(url string) []Article {
+	rawHtml := utils.GetHtml(url)
 
-// 	if category == "bola" {
-// 			// if subcategory in slice bola
-// 		if subcategory
-// 		}
-// 	} else {
-// 		results = false
-// 	}
+	newsIndex := []Article{}
 
-// 	return results
-// }
+	doc, err := goquery.NewDocumentFromReader(strings.NewReader(rawHtml))
+	if err != nil {
+		log.Fatal(err)
+	}
 
+	// Extract information from the HTML
+	doc.Find(".article__list").Each(func(i int, s *goquery.Selection) {
+		// Get article title
+		title := s.Find(".article__title").Text()
 
-// // TODO: implement this
-// // func KompasCategoriesListing(category string, subcategory string) []string{
-// // 	url := "http://" + category+ ".kompas.com/" + subcategory+ "/"
+		// Get article URL
+		url, _ := s.Find(".article__link").Attr("href")
 
+		// Get article date
+		date := s.Find(".article__date").Text()
 
-// // }
+		image := s.Find(".article__asset").Find("img").AttrOr("src", "")
+
+		newsIndex = append(newsIndex, Article{title, url, date, image})
+	})
+
+	return newsIndex
+}
+
+func KompasCategoryCheck(category string, categoryList []string) bool {
+	var results bool
+	if utils.IsInSlice(category, categoryList){
+		results = true
+	} else{
+		results = false
+	}
+	return results
+}
