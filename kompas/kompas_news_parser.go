@@ -8,7 +8,7 @@ import (
 
 	"github.com/dhupee/Indonesia-News-Aggregator/utils"
 
-	"golang.org/x/net/html"
+	"github.com/PuerkitoBio/goquery"
 )
 
 // declare the struct
@@ -43,52 +43,22 @@ func newsContentCleanUp(rawNewsContent string) string {
 // KompasGetNewsContent extracts the content from rawHTML based on the specified div tag.
 //
 // Parameters:
-// - rawHTML: the raw HTML string to extract content from.
+// - rawHtml: the raw HTML string to extract content from.
 // - div: the div tag to search for content within.
 //
 // Return type:
 // - []string: an array of extracted content strings.
-func KompasGetNewsContent(rawHTML string, div string) string {
-	tokenizer := html.NewTokenizer(strings.NewReader(rawHTML))
-
-	newsContent := []string{}
-
-	var inPTag bool
-
-	for {
-		tokenType := tokenizer.Next()
-
-		switch tokenType {
-		case html.ErrorToken:
-			// Reached the end of the document, return the extracted content
-			return strings.Join(newsContent, "\n")
-
-		case html.StartTagToken:
-			token := tokenizer.Token()
-
-			if token.Data == "p" {
-				inPTag = true
-			}
-
-		case html.EndTagToken:
-			token := tokenizer.Token()
-
-			if inPTag && token.Data == "p" {
-				inPTag = false
-			}
-
-		case html.TextToken:
-			if inPTag {
-				text := strings.TrimSpace(tokenizer.Token().Data)
-				if text != "" {
-					log.Println("Extracting text:", text)
-
-					// join the text
-					newsContent = append(newsContent, text)
-				}
-			}
-		}
+func KompasGetNewsContent(rawHtml string, div string) string {
+	// Parse the HTML
+	doc, err := goquery.NewDocumentFromReader(strings.NewReader(rawHtml))
+	if err != nil {
+		log.Fatal(err)
 	}
+
+	// Extract text content from the "read__content" div
+	newsContent := doc.Find(".read__content").Text()
+
+	return newsContent
 }
 
 // KompasGetTitle captures the string inside the <title> tag in the given raw HTML.
