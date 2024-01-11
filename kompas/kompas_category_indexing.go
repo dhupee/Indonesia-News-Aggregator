@@ -48,14 +48,18 @@ var KompasCategoryList = []string{
 	"advertorial",
 }
 
-func KompasGetNewsIndex(url string) []Article {
-	rawHtml := utils.GetHtml(url)
+func KompasGetNewsIndex(url string) ([]Article, error) {
+	rawHtml, err := utils.GetHtml(url)
+	if err != nil {
+		log.Println(err)
+	}
 
 	newsIndex := []Article{}
 
 	doc, err := goquery.NewDocumentFromReader(strings.NewReader(rawHtml))
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
+		return newsIndex, err
 	}
 
 	// Extract information from the HTML
@@ -74,7 +78,7 @@ func KompasGetNewsIndex(url string) []Article {
 		newsIndex = append(newsIndex, Article{title, url, date, image})
 	})
 
-	return newsIndex
+	return newsIndex, nil
 }
 
 func KompasCategoryCheck(category string, categoryList []string) bool {
