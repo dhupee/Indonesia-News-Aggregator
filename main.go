@@ -40,6 +40,7 @@ func RootHandler(c *fiber.Ctx) error {
 	return c.SendFile("./assets/welcome.txt")
 }
 
+// TODO: this one next, maybe just use universal solution
 func KompasSearchHandler(c *fiber.Ctx) error {
 	keyword := c.Get("keyword")
 	if keyword == "" {
@@ -50,7 +51,6 @@ func KompasSearchHandler(c *fiber.Ctx) error {
 	return c.SendString("You search for " + result)
 }
 
-// ! FOCUS ON THE MAIN CATEGORY INSTEAD
 func KompasIndexHandler(c *fiber.Ctx) error {
 	category := c.Get("category")
 	page := c.Get("page")
@@ -86,7 +86,10 @@ func KompasIndexHandler(c *fiber.Ctx) error {
 	}
 
 	// get news index
-	newsIndex := kompas.KompasGetNewsIndex(url)
+	newsIndex, err := kompas.KompasGetNewsIndex(url)
+	if err != nil {
+		return c.SendString(err.Error())
+	}
 
 	return c.JSON(newsIndex)
 }
@@ -107,6 +110,9 @@ func KompasNewsHandler(c *fiber.Ctx) error {
 		}
 	}
 
-	kompasNews := kompas.KompasGetData(url, &kompas.KompasNewsStruct{})
+	kompasNews, err := kompas.KompasGetData(url, &kompas.KompasNewsStruct{})
+	if err != nil {
+		return c.SendString(err.Error())
+	}
 	return c.JSON(kompasNews)
 }
