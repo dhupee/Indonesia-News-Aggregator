@@ -1,4 +1,4 @@
-package kompas
+package kompas_test
 
 import (
 	"testing"
@@ -7,7 +7,14 @@ import (
 )
 
 func TestKompasGetContent(t *testing.T) {
-	kompasNews := kompas.KompasGetContent("https://otomotif.kompas.com/read/2024/01/06/180829115/pindad-bikin-prototipe-motor-listrik-ev-scooter-daya-jelajah-100-km", &kompas.KompasNewsStruct{})
+	url := "https://otomotif.kompas.com/read/2024/01/06/180829115/pindad-bikin-prototipe-motor-listrik-ev-scooter-daya-jelajah-100-km"
+
+	kompasNews, err := kompas.KompasGetData(url, &kompas.KompasNewsStruct{})
+
+	if err != nil {
+		t.Error(err)
+	}
+
 	if kompasNews.Title == "" {
 		t.Error("Error retrieving title")
 	}

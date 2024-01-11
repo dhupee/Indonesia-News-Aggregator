@@ -13,12 +13,12 @@ import (
 
 // declare the struct
 type KompasNewsStruct struct {
-	Url     string
-	Title   string
-	Author  string
-	Editor  string
-	Date    string
-	Image   string
+	Url    string
+	Title  string
+	Author string
+	Editor string
+	Date   string
+	Image  string
 
 	Tags    []string
 	Content string
@@ -53,16 +53,13 @@ func KompasGetNewsContent(rawHtml string, div string) (string, error) {
 	// Parse the HTML
 	doc, err := goquery.NewDocumentFromReader(strings.NewReader(rawHtml))
 	if err != nil {
-		log.Println(err)
 		return "", err
 	}
 
-	// Extract text content from the specified div tag
-	newsContent := doc.Find(div).Text()
+	newsContent := doc.Find("p").Text()
 
 	return newsContent, nil
 }
-
 
 // KompasGetTitle retrieves the title from a raw HTML string.
 //
@@ -88,25 +85,25 @@ func KompasGetTitle(rawHTML string) (string, error) {
 	return title, nil
 }
 
-
 // KompasGetMetadata retrieves the specified metadata from a given code block using a regular expression pattern.
 //
 // Parameters:
-//   rawHtml: The code block to search for metadata.
-//   pattern: The regular expression pattern to match the metadata.
+//
+//	rawHtml: The code block to search for metadata.
+//	pattern: The regular expression pattern to match the metadata.
 //
 // Returns:
-//   string: The value of the matched metadata.
-//   error: An error if no match was found.
+//
+//	string: The value of the matched metadata.
+//	error: An error if no match was found.
 func KompasGetMetadata(rawHtml string, pattern string) (string, error) {
-    re := regexp.MustCompile(pattern)
-    matches := re.FindStringSubmatch(rawHtml)
-    if len(matches) > 1 {
-        return matches[1], nil
-    }
-    return "", fmt.Errorf("no match found")
+	re := regexp.MustCompile(pattern)
+	matches := re.FindStringSubmatch(rawHtml)
+	if len(matches) > 1 {
+		return matches[1], nil
+	}
+	return "", fmt.Errorf("no match found")
 }
-
 
 // KompasGetMetadata2 retrieves metadata from the given raw HTML using the specified pattern.
 //
@@ -132,8 +129,6 @@ func KompasGetMetadata2(rawHtml string, pattern string) (string, error) {
 	return metadata, nil
 }
 
-
-
 // KompasGetNewsTags retrieves the news tags from the given raw HTML using the specified pattern.
 //
 // Parameters:
@@ -157,7 +152,6 @@ func KompasGetNewsTags(rawHtml string, pattern string) ([]string, error) {
 	return tag_list, nil
 }
 
-
 // kompasGetImageUrl extracts the URL of an image from the given raw HTML using goquery.
 //
 // rawHtml: The raw HTML string from which to extract the image URL.
@@ -178,8 +172,6 @@ func KompasGetImageUrl(rawHtml string) (string, error) {
 	return imageUrl, nil
 }
 
-
-
 // KompasGetData retrieves data from the given URL and populates the KompasNewsStruct with the extracted information.
 //
 // Parameters:
@@ -188,7 +180,7 @@ func KompasGetImageUrl(rawHtml string) (string, error) {
 //
 // Return:
 // - KompasNewsStruct: the populated KompasNewsStruct containing the extracted data.
-func KompasGetData(url string, kompasNews *KompasNewsStruct) KompasNewsStruct {
+func KompasGetData(url string, kompasNews *KompasNewsStruct) (KompasNewsStruct, error) {
 	// get the raw HTML
 	rawHTML, err := utils.GetHtml(url)
 	if err != nil {
