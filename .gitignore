@@ -6,5 +6,10 @@ main
 
 # temporary folders & iles
 placeholder/
+tmp/
 /*.html
 /*.txt
+
+# all .go file in root except main.go
+*.go
+!main.go
