@@ -1,13 +1,20 @@
-package utils
+package utils_test
 
 import (
 	"testing"
+
+	"github.com/dhupee/Indonesia-News-Aggregator/utils"
 )
 
 func TestGetHtml(t *testing.T) {
 	url := "https://www.example.com"
-	rawHTML := GetHtml(url)
+	rawHTML, err := utils.GetHtml(url)
+
+	if err != nil {
+		t.Error(err)
+	}
+
 	if rawHTML == "" {
-		t.Error("Error")
+		t.Error("Empty HTML")
 	}
 }
