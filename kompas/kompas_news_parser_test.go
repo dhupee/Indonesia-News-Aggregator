@@ -3,7 +3,7 @@ package kompas
 import (
 	"testing"
 
-	"github.com/dhupee/Indonesia-News-Aggregator/kompas"
+	kompas "github.com/dhupee/Indonesia-News-Aggregator/kompas"
 )
 
 func TestKompasGetContent(t *testing.T) {
