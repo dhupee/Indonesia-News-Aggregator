@@ -20,21 +20,23 @@ func main() {
 	}
 
 	// Create a new Fiber app
-	app := fiber.New()
+	app := fiber.New(fiber.Config{
+		ServerHeader: "Indonesia-News-Aggregator",
+	})
 
 	// Get the port from the environment variables
 	port := os.Getenv("PORT")
 
 	// Define the route handler for the root path and non-source-specific routes
 	app.Get("/", RootHandler)
+	app.Get("/search/", SearchHandler)
 
 	// Define the route handlers for Kompas endpoints
-	app.Get("/kompas/search/", KompasSearchHandler)
 	app.Get("/kompas/index/", KompasIndexHandler)
 	app.Get("/kompas/news/", KompasNewsHandler)
 
 	// Start the app on the specified port
-	app.Listen(":" + port)
+	log.Fatal(app.Listen(":"+port))
 }
 
 func RootHandler(c *fiber.Ctx) error {
@@ -42,7 +44,8 @@ func RootHandler(c *fiber.Ctx) error {
 }
 
 // TODO: this one next, maybe just use universal solution
-func KompasSearchHandler(c *fiber.Ctx) error {
+// TODO: W.I.P
+func SearchHandler(c *fiber.Ctx) error {
 	keyword := c.Get("keyword")
 	if keyword == "" {
 		return c.SendString("Please specify keyword")
@@ -70,7 +73,14 @@ func KompasIndexHandler(c *fiber.Ctx) error {
 	//make sure the date is YYYY-MM-DD
 	if date != "" {
 		if !regexp.MustCompile(`^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$`).MatchString(date) {
-			return c.SendString("Invalid date, please use YYYY-MM-DD format in your 'Date' header")
+			return c.SendString("Invalid date\n\nPlease use YYYY-MM-DD format in your 'Date' header")
+		}
+	}
+
+	// make sure the page is a number
+	if page != "" {
+		if !regexp.MustCompile(`^[0-9]+$`).MatchString(page) {
+			return c.SendString("Invalid page\n\nPlease use a number in your 'Page' header")
 		}
 	}
 
@@ -108,7 +118,7 @@ func KompasNewsHandler(c *fiber.Ctx) error {
 	subDomainRegex := regexp.MustCompile(`^https?://(.+\.)*kompas\.com`)
 	if !subDomainRegex.MatchString(url) {
 		if url == "" {
-			return c.SendFile("./kompas/error_text/kompas_news_handler.txt")
+			return c.SendFile("./assets/kompas/kompas_news_handler_error.txt")
 		}
 		// Reject the URL
 		domainRegex := regexp.MustCompile(`^https?://([^/]+)`)
