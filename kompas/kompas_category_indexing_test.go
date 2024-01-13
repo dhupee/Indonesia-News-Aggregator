@@ -1,1 +1,1 @@
-package kompas
+package kompas_test
