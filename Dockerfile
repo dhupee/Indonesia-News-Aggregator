@@ -1,17 +1,29 @@
-# Use the official Golang image as the base image
-FROM golang:alpine
+# Base image
+FROM golang:1.21.5-alpine3.19 AS Builder
 
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy the code into the container
+# Copy the application source code
 COPY . .
 
-# Install the required packages for loading environment variables from a file
-RUN apk add --no-cache bash
+# Download and cache Go modules
+RUN go mod download
 
-# Build the Go application
-RUN go build -o main .
+# Build the application
+RUN go build -o ./appbin ./main.go
+
+FROM alpine:3.19
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy the application binary from the builder image
+COPY --from=Builder /app/appbin ./
+COPY --from=Builder /app/assets ./assets
+
+# Expose the application port
+EXPOSE 8080
 
 # Run the application
-CMD ["bash", "-c", "source .env && ./main"]
+CMD ["./appbin"]
