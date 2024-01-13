@@ -16,7 +16,14 @@ func main() {
 	// Load the .env file
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatal("Failed to load .env")
+		log.Println("Failed to load .env")
+		log.Println("Using default environment variables")
+	}
+
+	// Get the port from the environment variables
+	port := os.Getenv("PORT")
+	if port == "" {
+		log.Fatal("PORT environment variable is not set")
 	}
 
 	// Create a new Fiber app
@@ -24,16 +31,15 @@ func main() {
 		ServerHeader: "Indonesia-News-Aggregator",
 	})
 
-	// Get the port from the environment variables
-	port := os.Getenv("PORT")
+	v1 := app.Group("/v1") // add v1 grouping to manage if needed
 
 	// Define the route handler for the root path and non-source-specific routes
-	app.Get("/", RootHandler)
-	app.Get("/search/", SearchHandler)
+	v1.Get("/", RootHandler)
+	v1.Get("/search", SearchHandler)
 
 	// Define the route handlers for Kompas endpoints
-	app.Get("/kompas/index/", KompasIndexHandler)
-	app.Get("/kompas/news/", KompasNewsHandler)
+	v1.Get("/kompas/index", KompasIndexHandler)
+	v1.Get("/kompas/news", KompasNewsHandler)
 
 	// Start the app on the specified port
 	log.Fatal(app.Listen(":"+port))
