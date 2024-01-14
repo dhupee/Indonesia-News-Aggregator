@@ -21,3 +21,5 @@ so currently we are still manage to have Kompas.com as the first source to be re
 - [ ] Get news from Vivanews
 - [ ] Get news from Detik
 - [ ] Get news from Tirto
+- [ ] News Caching
+- [ ] Better Docs
