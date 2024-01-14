@@ -1,0 +1,96 @@
+{
+    "info": {
+        "_postman_id": "54e1644f-4562-4af9-9ce7-cc0b39e7a6a7",
+        "name": "Indonesia-News-Aggregator",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "description": ""
+    },
+    "item": [
+        {
+            "name": "V1 - Kompas - Get News Content",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://127.0.0.1:4000/v1/kompas/news/",
+                    "path": [
+                        "v1",
+                        "kompas",
+                        "news"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "127",
+                        "0",
+                        "0",
+                        "1"
+                    ],
+                    "port": "4000"
+                },
+                "header": [
+                    {
+                        "key": "Source",
+                        "value": "https://otomotif.kompas.com/read/2024/01/06/180829115/pindad-bikin-prototipe-motor-listrik-ev-scooter-daya-jelajah-100-km"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "V1 - Kompas - Get News Index",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://127.0.0.1:4000/v1/kompas/index/",
+                    "path": [
+                        "v1",
+                        "kompas",
+                        "index"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "127",
+                        "0",
+                        "0",
+                        "1"
+                    ],
+                    "port": "4000"
+                },
+                "header": [
+                    {
+                        "key": "Date",
+                        "value": "2023-12-29"
+                    },
+                    {
+                        "key": "Category",
+                        "value": "global",
+                        "disabled": true
+                    },
+                    {
+                        "key": "Page",
+                        "value": "all",
+                        "disabled": true
+                    }
+                ]
+            }
+        },
+        {
+            "name": "V1 - Root Handler",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://127.0.0.1:8080/v1/",
+                    "path": [
+                        "v1"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "127",
+                        "0",
+                        "0",
+                        "1"
+                    ],
+                    "port": "8080"
+                }
+            }
+        }
+    ]
+}
