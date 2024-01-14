@@ -35,7 +35,7 @@ func main() {
 
 	// Define the route handler for the root path and non-source-specific routes
 	v1.Get("/", RootHandler)
-	v1.Get("/search", SearchHandler)
+	// v1.Get("/search", SearchHandler)
 
 	// Define the route handlers for Kompas endpoints
 	v1.Get("/kompas/index", KompasIndexHandler)
@@ -51,15 +51,15 @@ func RootHandler(c *fiber.Ctx) error {
 
 // TODO: this one next, maybe just use universal solution
 // TODO: W.I.P
-func SearchHandler(c *fiber.Ctx) error {
-	keyword := c.Get("keyword")
-	if keyword == "" {
-		return c.SendString("Please specify keyword")
-	}
+// func SearchHandler(c *fiber.Ctx) error {
+// 	keyword := c.Get("keyword")
+// 	if keyword == "" {
+// 		return c.SendString("Please specify keyword")
+// 	}
 
-	result := kompas.Search(keyword)
-	return c.SendString("You search for " + result)
-}
+// 	result := kompas.Search(keyword)
+// 	return c.SendString("You search for " + result)
+// }
 
 func KompasIndexHandler(c *fiber.Ctx) error {
 	// Header
