@@ -3,7 +3,7 @@ Please specify Source URL
 Curl Example:
 
 curl  -X GET
-'<URL>/kompas/news/'
+'https://indonesian-news-aggregator.p.rapidapi.com/v1//kompas/news/'
 --header 'Accept: */*'
 --header 'User-Agent: Thunder Client (https://www.thunderclient.com)'
 --header 'Source: https://otomotif.kompas.com/read/2024/01/06/180829115/pindad-bikin-prototipe-motor-listrik-ev-scooter-daya-jelajah-100-km'"
