@@ -19,13 +19,13 @@ Please refer to this [docs](https://rapidapi.com/narutohaj00/api/indonesian-news
 ## Work in Progress and Finished Features
 
 - [x] Get news from Kompas
+- [ ] Get news from Detik
 - [x] Better Docs
 
 ## Todo list
 
 - [ ] Search feature with google
 - [ ] Get news from Vivanews
-- [ ] Get news from Detik
 - [ ] Get news from Tirto
 - [ ] News Caching
 - [ ] More better Docs
