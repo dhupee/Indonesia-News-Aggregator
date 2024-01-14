@@ -3,4 +3,4 @@ Welcome to Indonesian News Aggregator
 This API is a tool to help you to aggregate news from various source to help your project and software that you build.
 
 Please refer to docs for reference:
-<URL>
+https://rapidapi.com/narutohaj00/api/indonesian-news-aggregator
