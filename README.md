@@ -14,7 +14,7 @@ so currently we are still manage to have Kompas.com as the first source to be re
 
 ## Docs
 
-Please refer to this [docs]([https://](https://rapidapi.com/narutohaj00/api/indonesian-news-aggregator)) We provided in RapidAPI.
+Please refer to this [docs](https://rapidapi.com/narutohaj00/api/indonesian-news-aggregator) We provided in RapidAPI.
 
 ## Work in Progress and Finished Features
 

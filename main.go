@@ -36,6 +36,9 @@ func main() {
 	// Define the route handler for the root path and non-source-specific routes
 	v1.Get("/", RootHandler)
 	// v1.Get("/search", SearchHandler)
+	v1.Get("/ping", func(c *fiber.Ctx) error { // health check
+		return c.SendString("pong")
+	})
 
 	// Define the route handlers for Kompas endpoints
 	v1.Get("/kompas/index", KompasIndexHandler)
