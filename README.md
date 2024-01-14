@@ -14,12 +14,12 @@ so currently we are still manage to have Kompas.com as the first source to be re
 
 ## Docs
 
-TBA
+Please refer to this [docs]([https://](https://rapidapi.com/narutohaj00/api/indonesian-news-aggregator)) We provided in RapidAPI.
 
 ## Work in Progress and Finished Features
 
 - [x] Get news from Kompas
-- [ ] Better Docs
+- [x] Better Docs
 
 ## Todo list
 
@@ -28,3 +28,4 @@ TBA
 - [ ] Get news from Detik
 - [ ] Get news from Tirto
 - [ ] News Caching
+- [ ] More better Docs
