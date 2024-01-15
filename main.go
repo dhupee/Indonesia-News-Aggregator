@@ -3,8 +3,11 @@ package main
 import (
 	"log"
 	"os"
+	// "strings"
+	// "regexp"
 
 	kompas "github.com/dhupee/Indonesia-News-Aggregator/kompas"
+	detik "github.com/dhupee/Indonesia-News-Aggregator/detik"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
@@ -42,7 +45,7 @@ func main() {
 	v1.Get("/kompas/index", kompas.KompasIndexHandler)
 	v1.Get("/kompas/news", kompas.KompasNewsHandler)
 
-	// v1.Get("/detik/news", DetikNewsHandler)
+	v1.Get("/detik/news", detik.DetikNewsHandler)
 
 	// Start the app on the specified port
 	log.Fatal(app.Listen(":"+port))
