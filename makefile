@@ -4,7 +4,7 @@ start:
 	go run main.go
 	
 start-container:
-    docker run --env-file .env -p 8080:8080 indonesian-news-aggregator
+	docker run --env-file .env -p 8080:8080 indonesian-news-aggregator
 
 build-container:
 	docker build . -t "indonesian-news-aggregator" --file Dockerfile
