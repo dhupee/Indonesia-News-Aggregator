@@ -21,11 +21,12 @@ Please refer to this [docs](https://rapidapi.com/narutohaj00/api/indonesian-news
 - [x] Get news from Kompas
 - [ ] Get news from Detik
 - [x] Better Docs
+- [ ] News Caching (Risk of me being IP blocked and how slow it is actually)
 
 ## Todo list
 
 - [ ] Search feature with google
 - [ ] Get news from Vivanews
 - [ ] Get news from Tirto
-- [ ] News Caching
 - [ ] More better Docs
+- [ ] Cron job to cache it
