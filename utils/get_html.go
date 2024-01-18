@@ -8,6 +8,14 @@ import (
 	"github.com/playwright-community/playwright-go"
 )
 
+// GetHtmlSimple retrieves the HTML content from the specified URL using simple HTTP requests.
+//
+// Parameters:
+// - url: a string representing the URL to be fetched.
+//
+// Returns:
+// - string: the HTML content of the URL.
+// - error: an error if any occurred during the request.
 func GetHtmlSimple(url string) (string, error) {
 	client := &http.Client{}
 
@@ -35,6 +43,11 @@ func GetHtmlSimple(url string) (string, error) {
 	return rawHTML, nil
 }
 
+// GetHtml retrieves the HTML content of a web page given its URL using Playwright to scrape the web page.
+//
+// url: The URL of the web page.
+// string: The HTML content of the web page.
+// error: An error if something goes wrong during the process.
 func GetHtml(url string) (string, error) {
 	// start the browser, if not installed then install
 	pw, err := playwright.Run()
