@@ -45,6 +45,7 @@ func main() {
 	v1.Get("/kompas/index", kompas.KompasIndexHandler)
 	v1.Get("/kompas/news", kompas.KompasNewsHandler)
 
+	// Define the route handlers for Detik endpoints
 	v1.Get("/detik/news", detik.DetikNewsHandler)
 
 	// Start the app on the specified port
