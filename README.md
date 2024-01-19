@@ -5,6 +5,7 @@ Indonesia News Aggregator is an API written in Go to enable developers to retrie
 - [Indonesia-News-Aggregator](#indonesia-news-aggregator)
   - [THIS PROJECT IS IN MVP STAGES](#this-project-is-in-mvp-stages)
   - [Docs](#docs)
+  - [Legality](#legality)
   - [Work in Progress and Finished Features](#work-in-progress-and-finished-features)
   - [Todo list](#todo-list)
 
@@ -15,6 +16,10 @@ so currently we are still manage to have Kompas.com as the first source to be re
 ## Docs
 
 Please refer to this [docs](https://rapidapi.com/narutohaj00/api/indonesian-news-aggregator) We provided in RapidAPI.
+
+## Legality
+
+TBA
 
 ## Work in Progress and Finished Features
 
