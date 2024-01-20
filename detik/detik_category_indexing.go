@@ -9,6 +9,61 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
+// Detik Categories
+var DetikCategoryList = []string{
+	"news",
+	"edu",
+	"finance",
+	"hot", // this is showbiz
+	"inet", // related to internet, gadget and stuff
+	"sport",
+	"oto", // related to motorcycle and car, all automotives
+	"travel",
+	"sepakbola",
+	"food",
+	"health",
+	"wolipop", // all things women
+	"jatim",
+	"jateng",
+	"jabar",
+	"sulsel",
+	"sumut",
+	"bali",
+	"hikmah", // related to religious, mainly islam
+	"sumbagsel", // sumsel, lampung
+	"properti",
+	"jogja",
+}
+
+// Detik News Sub categories
+var DetikNewsSubCategoryList = []string{
+	"semua-berita", // add special condition for this
+	"berita",
+	"daerah",
+	"internasional",
+	"kolom",
+	"pro-kontra",
+	"foto-news", // TODO: check this later
+	"detiktv", // TODO: and this
+	"bbc",
+	"australiaplus",
+	"jawabarat",
+	"jawabtengah",
+	"jawatimur",
+	"suara-pembaca",
+	"infografis",
+	"investigasi",
+	"intermeso",
+	"crimestory",
+	"pemilu",
+	"jabodetabek",
+	"hukum",
+}
+
+var EduDetikNewsSubCategoryList = []string{
+
+}
+
 type Article struct{
 	Title string
 	Url string
