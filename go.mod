@@ -6,15 +6,19 @@ require (
 	github.com/PuerkitoBio/goquery v1.8.1 // direct
 	github.com/gofiber/fiber/v2 v2.52.0 // direct
 	github.com/joho/godotenv v1.5.1 // direct
-	golang.org/x/net v0.20.0 // direct
 	github.com/playwright-community/playwright-go v0.4001.0 // direct
+	golang.org/x/net v0.20.0 // direct
+	github.com/go-redis/redis/v8 v8.11.5 // direct
 )
 
 require (
 	github.com/andybalholm/brotli v1.0.5 // indirect
 	github.com/andybalholm/cascadia v1.3.2 // indirect
+	github.com/cespare/xxhash/v2 v2.1.2 // indirect
 	github.com/danwakefield/fnmatch v0.0.0-20160403171240-cbb64ac3d964 // indirect
+	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/go-jose/go-jose/v3 v3.0.1 // indirect
+
 	github.com/go-stack/stack v1.8.1 // indirect
 	github.com/google/uuid v1.5.0 // indirect
 	github.com/klauspost/compress v1.17.0 // indirect
