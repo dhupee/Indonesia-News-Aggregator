@@ -24,7 +24,7 @@ TBA
 ## Work in Progress and Finished Features
 
 - [x] Get news from Kompas
-- [ ] Get news from Detik
+- [X] Get news from Detik
 - [x] Better Docs
 - [ ] News Caching (Risk of me being IP blocked and how slow it is actually)
 
