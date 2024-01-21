@@ -26,7 +26,8 @@ TBA
 - [x] Get news from Kompas
 - [X] Get news from Detik
 - [x] Better Docs
-- [ ] News Caching (Risk of me being IP blocked and how slow it is actually)
+- [ ] News Content Caching (Risk of me being IP blocked and how slow it is actually)
+- [ ] News Index Caching (I have some challenges in this one)
 
 ## Todo list
 
@@ -34,4 +35,4 @@ TBA
 - [ ] Get news from Vivanews
 - [ ] Get news from Tirto
 - [ ] More better Docs
-- [ ] Cron job to cache it
+- [ ] Cron job to delete cache daily
