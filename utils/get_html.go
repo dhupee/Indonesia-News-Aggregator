@@ -54,7 +54,7 @@ func GetHtml(url string) (string, error) {
 	if err != nil {
 		log.Println("could not start playwright, installing...")
 		if err = playwright.Install(); err != nil {
-			log.Println("could not install playwright: %v", err)
+			log.Fatal("could not install playwright: %v", err)
 		}
 	}
 
