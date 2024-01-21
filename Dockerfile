@@ -1,5 +1,5 @@
 # Base image
-FROM golang:1.21.5-bullseye
+FROM golang:1.21.5-bookworm
 
 # Set the working directory inside the container
 WORKDIR /app
