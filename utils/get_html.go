@@ -95,5 +95,11 @@ func GetHtml(url string) (string, error) {
 		log.Println("could not close the browser: %v", err)
 	}
 
+	// close the playwright
+	err = pw.Stop()
+	if err != nil {
+		log.Println("could not close the playwright: %v", err)
+	}
+
 	return rawHtml, nil
 }
