@@ -8,6 +8,7 @@ tmp/
 .env
 
 # unneeded files
+Old_Dockerfile
 .editorconfig
 .gitignore
 .env.example

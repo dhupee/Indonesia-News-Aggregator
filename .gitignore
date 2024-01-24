@@ -11,5 +11,5 @@ tmp/
 /*.txt
 
 # all .go file in root except main.go
-*.go
+/*.go
 !main.go

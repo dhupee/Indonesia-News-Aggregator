@@ -49,7 +49,7 @@ func newsContentCleanUp(rawNewsContent string) string {
 // Return type:
 // - string: the extracted content string.
 // - error: any error that occurred during the extraction process.
-func KompasGetNewsContent(rawHtml string, div string) (string, error) {
+func KompasGetContent(rawHtml string, div string) (string, error) {
 	// Parse the HTML
 	doc, err := goquery.NewDocumentFromReader(strings.NewReader(rawHtml))
 	if err != nil {
@@ -138,10 +138,10 @@ func KompasGetMetadata2(rawHtml string, pattern string) (string, error) {
 // Returns:
 // - []string: the list of news tags extracted from the HTML.
 // - error: an error if any occurred during the extraction process.
-func KompasGetNewsTags(rawHtml string, pattern string) ([]string, error) {
+func KompasGetTags(rawHtml string, pattern string) ([]string, error) {
 	doc, err := goquery.NewDocumentFromReader(strings.NewReader(rawHtml))
 	if err != nil {
-		return nil, err
+		return []string{}, err
 	}
 
 	var tag_list []string
@@ -182,7 +182,7 @@ func KompasGetImageUrl(rawHtml string) (string, error) {
 // - KompasNewsStruct: the populated KompasNewsStruct containing the extracted data.
 func KompasGetData(url string, kompasNews *KompasNewsStruct) (KompasNewsStruct, error) {
 	// get the raw HTML
-	rawHTML, err := utils.GetHtml(url)
+	rawHTML, err := utils.GetHtmlSimple(url)
 	if err != nil {
 		log.Println(err)
 		return KompasNewsStruct{}, err
@@ -223,13 +223,13 @@ func KompasGetData(url string, kompasNews *KompasNewsStruct) (KompasNewsStruct, 
 		image = ""
 	}
 
-	newsContent, err := KompasGetNewsContent(rawHTML, `read__content`)
+	newsContent, err := KompasGetContent(rawHTML, `read__content`)
 	if err != nil {
 		log.Println(err)
 		newsContent = ""
 	}
 
-	newsTags, err := KompasGetNewsTags(rawHTML, "meta[name='content_tags']")
+	newsTags, err := KompasGetTags(rawHTML, "meta[name='content_tags']")
 	if err != nil {
 		log.Println(err)
 		newsTags = []string{}
