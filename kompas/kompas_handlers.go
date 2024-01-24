@@ -4,6 +4,8 @@ import (
 	"regexp"
 	"strings"
 
+	// db "github.com/dhupee/Indonesia-News-Aggregator/db"
+
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -80,9 +82,18 @@ func KompasNewsHandler(c *fiber.Ctx) error {
 		}
 	}
 
-	kompasNews, err := KompasGetData(url, &KompasNewsStruct{})
+	kompasNews, err := GetKompasNewsCache(url)
 	if err != nil {
-		return c.SendString(err.Error())
+		kompasNews, err = KompasGetData(url, &KompasNewsStruct{})
+		if err != nil {
+			return c.SendString(err.Error())
+		}
+		// cache the news
+		err = SetKompasNewsCache(url, kompasNews)
+		if err != nil {
+			return c.SendString(err.Error())
+		}
 	}
+
 	return c.JSON(kompasNews)
 }

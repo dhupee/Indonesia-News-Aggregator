@@ -8,10 +8,14 @@ import (
 
 	kompas "github.com/dhupee/Indonesia-News-Aggregator/kompas"
 	detik "github.com/dhupee/Indonesia-News-Aggregator/detik"
+	db "github.com/dhupee/Indonesia-News-Aggregator/db"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
+	"github.com/go-redis/redis/v8"
 )
+
+var rdb *redis.Client
 
 func main() {
 	// Load the .env file
@@ -22,10 +26,17 @@ func main() {
 	}
 
 	// Get the port from the environment variables
-	port := os.Getenv("PORT")
-	if port == "" {
+	PORT := os.Getenv("PORT")
+	if PORT == "" {
 		log.Fatal("PORT environment variable is not set")
 	}
+
+	// Init Redis
+	rdb, err = db.Init()
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Println("Redis initialized")
 
 	// Create a new Fiber app
 	app := fiber.New(fiber.Config{
@@ -50,7 +61,7 @@ func main() {
 	v1.Get("/detik/news", detik.DetikNewsHandler)
 
 	// Start the app on the specified port
-	log.Fatal(app.Listen(":"+port))
+	log.Fatal(app.Listen(":"+PORT))
 }
 
 func RootHandler(c *fiber.Ctx) error {

@@ -85,7 +85,7 @@ func DetikIndexHandler(c *fiber.Ctx) error {
 
 	if page != "" && date != "" {
 		// extract the DD, MM, and YYYY from the date
-		dateParts := strings.Split(date, "-") 
+		dateParts := strings.Split(date, "-")
 		day := dateParts[2]
 		month := dateParts[1]
 		year := dateParts[0]
@@ -127,9 +127,18 @@ func DetikNewsHandler(c *fiber.Ctx) error {
 		}
 	}
 
-	detikNews, err := DetikGetData(url, &DetikNewsStruct{})
+	detikNews, err := GetDetikNewsCache(url)
 	if err != nil {
-		return c.SendString(err.Error())
+		detikNews, err = DetikGetData(url, &DetikNewsStruct{})
+		if err != nil {
+			return c.SendString(err.Error())
+		}
+		// cache the news
+		err = SetDetikNewsCache(url, detikNews)
+		if err != nil {
+			return c.SendString(err.Error())
+		}
 	}
+
 	return c.JSON(detikNews)
 }
