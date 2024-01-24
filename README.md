@@ -26,7 +26,7 @@ TBA
 - [x] Get news from Kompas
 - [X] Get news from Detik
 - [x] Better Docs
-- [ ] News Content Caching (Risk of me being IP blocked and how slow it is actually)
+- [x] News Content Caching (Risk of me being IP blocked and how slow it is actually)
 - [ ] News Index Caching (I have some challenges in this one)
 
 ## Todo list
